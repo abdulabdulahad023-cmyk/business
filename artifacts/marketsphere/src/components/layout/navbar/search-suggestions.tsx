@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+import { Search, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ALL_PRODUCTS, CATEGORIES } from '@/lib/mock-data';
@@ -9,6 +9,14 @@ import { ALL_PRODUCTS, CATEGORIES } from '@/lib/mock-data';
 export function SearchSuggestions() {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
+  const [, setLocation] = useLocation();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && query.trim()) {
+      setOpen(false);
+      setLocation(`/products?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     if (!query) return [];
@@ -44,6 +52,7 @@ export function SearchSuggestions() {
               setQuery(e.target.value);
               setOpen(true);
             }}
+            onKeyDown={handleKeyDown}
             onFocus={() => setOpen(true)}
             className="w-full pl-10 pr-4 bg-muted/50 border-transparent focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-primary rounded-full transition-all duration-300 h-11"
           />
@@ -106,10 +115,36 @@ export function SearchSuggestions() {
                   ))}
                 </div>
               )}
+              
+              {query.trim().length > 0 && (
+                <>
+                  <div className="h-px bg-border my-2 mx-4" />
+                  <Link href={`/products?q=${encodeURIComponent(query.trim())}`}>
+                    <div 
+                      onClick={() => setOpen(false)}
+                      className="px-4 py-3 text-sm font-semibold text-primary hover:text-primary/80 hover:bg-muted/50 transition-colors flex items-center justify-between group cursor-pointer"
+                    >
+                      <span>View all results for "{query}"</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                </>
+              )}
             </div>
           ) : (
-            <div className="py-8 text-center text-muted-foreground text-sm">
-              No results found for "{query}"
+            <div className="py-8 flex flex-col items-center justify-center text-center px-4">
+              <p className="text-muted-foreground text-sm mb-4">
+                No results found for "{query}"
+              </p>
+              <Link href={`/products?q=${encodeURIComponent(query.trim())}`}>
+                <div 
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-2 text-sm font-semibold text-primary bg-primary/10 rounded-full hover:bg-primary/20 transition-colors inline-flex items-center gap-2 group cursor-pointer"
+                >
+                  Search all products
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
             </div>
           )}
         </ScrollArea>

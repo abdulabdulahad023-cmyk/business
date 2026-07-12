@@ -50,7 +50,15 @@ export function MegaMenu() {
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link href="/new-arrivals">
+          <Link href="/products">
+            <span className="group inline-flex h-11 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold tracking-wide text-foreground/80 transition-colors hover:text-foreground hover:bg-transparent cursor-pointer">
+              Shop All
+            </span>
+          </Link>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+          <Link href="/products?sort=newest">
             <span className="group inline-flex h-11 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-semibold tracking-wide text-foreground/80 transition-colors hover:text-foreground hover:bg-transparent cursor-pointer">
               New Arrivals
             </span>

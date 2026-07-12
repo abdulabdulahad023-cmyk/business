@@ -10,6 +10,8 @@ import { Footer } from '@/components/layout/footer';
 import { Home } from '@/pages/home';
 import { CartItem, WishlistItem, Product } from '@/types';
 
+import { Products } from '@/pages/products';
+
 const queryClient = new QueryClient();
 
 function Router({ 
@@ -23,6 +25,12 @@ function Router({
     <Switch>
       <Route path="/">
         <Home 
+          onAddToCart={onAddToCart} 
+          onToggleWishlist={onToggleWishlist} 
+        />
+      </Route>
+      <Route path="/products">
+        <Products 
           onAddToCart={onAddToCart} 
           onToggleWishlist={onToggleWishlist} 
         />

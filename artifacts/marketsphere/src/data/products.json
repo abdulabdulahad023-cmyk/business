@@ -143,5 +143,140 @@
     "imageUrl": "/images/cat-beauty.jpg",
     "category": "Beauty & Wellness",
     "isDeal": true
+  },
+  {
+    "id": "p9",
+    "brand": "Kepler",
+    "name": "Ergonomic Wireless Mouse with Precision Sensor",
+    "description": "Designed for all-day comfort, this ergonomic mouse reduces wrist strain. Features a high-precision optical sensor, customizable side buttons, and multi-device Bluetooth connectivity.",
+    "price": 85.00,
+    "rating": 4.7,
+    "reviews": 215,
+    "imageUrl": "/images/cat-electronics.jpg",
+    "category": "Electronics & Audio"
+  },
+  {
+    "id": "p10",
+    "brand": "Achron",
+    "name": "Classic Aviator Sunglasses",
+    "description": "Timeless aviator silhouette crafted from lightweight aerospace-grade titanium. The polarized lenses offer 100% UV protection and exceptional visual clarity.",
+    "price": 120.00,
+    "rating": 4.8,
+    "reviews": 156,
+    "imageUrl": "/images/cat-fashion.jpg",
+    "category": "Fashion & Apparel"
+  },
+  {
+    "id": "p11",
+    "brand": "Culinary Co.",
+    "name": "Professional Chef's Knife - 8 inch",
+    "description": "The quintessential kitchen workhorse. Forged from high-carbon Japanese steel with a beautiful Damascus pattern, it offers an incredibly sharp edge and perfect balance.",
+    "price": 110.00,
+    "originalPrice": 140.00,
+    "rating": 4.9,
+    "reviews": 320,
+    "imageUrl": "/images/cat-home.jpg",
+    "category": "Home & Living"
+  },
+  {
+    "id": "p12",
+    "brand": "Aura",
+    "name": "Vitamin C Brightening Moisturizer",
+    "description": "A daily moisturizer that delivers a potent dose of Vitamin C and squalane. Instantly brightens dull skin, evens out texture, and provides long-lasting hydration.",
+    "price": 48.00,
+    "rating": 4.6,
+    "reviews": 412,
+    "imageUrl": "/images/cat-beauty.jpg",
+    "category": "Beauty & Wellness"
+  },
+  {
+    "id": "p13",
+    "brand": "Sonic",
+    "name": "Over-Ear Studio Headphones",
+    "description": "Reference-quality sound for audiophiles. These over-ear headphones feature large 50mm drivers, plush memory foam ear cups, and a durable braided cable.",
+    "price": 195.00,
+    "originalPrice": 250.00,
+    "rating": 4.8,
+    "reviews": 289,
+    "imageUrl": "/images/prod-speaker.jpg",
+    "category": "Electronics & Audio"
+  },
+  {
+    "id": "p14",
+    "brand": "Nomad",
+    "name": "Minimalist Leather Cardholder",
+    "description": "Carry just what you need. This slim cardholder is hand-stitched from full-grain Italian leather, featuring three card slots and a central pocket for folded bills.",
+    "price": 35.00,
+    "rating": 4.9,
+    "reviews": 512,
+    "imageUrl": "/images/cat-fashion.jpg",
+    "category": "Fashion & Apparel"
+  },
+  {
+    "id": "p15",
+    "brand": "Essential",
+    "name": "Waffle Weave Bath Towel Set",
+    "description": "Ultra-absorbent and quick-drying waffle weave towels. Made from 100% organic long-staple cotton, they bring a spa-like texture and luxury to your daily routine.",
+    "price": 75.00,
+    "rating": 4.7,
+    "reviews": 198,
+    "imageUrl": "/images/cat-home.jpg",
+    "category": "Home & Living"
+  },
+  {
+    "id": "p16",
+    "brand": "Zen",
+    "name": "Aromatherapy Shower Steamers",
+    "description": "Turn your shower into a rejuvenating spa experience. These natural steamers release therapeutic essential oils like eucalyptus and lavender to clear your mind and soothe your senses.",
+    "price": 24.00,
+    "rating": 4.5,
+    "reviews": 325,
+    "imageUrl": "/images/cat-beauty.jpg",
+    "category": "Beauty & Wellness"
+  },
+  {
+    "id": "p17",
+    "brand": "Vou",
+    "name": "Wireless Charging Pad - Walnut",
+    "description": "A sleek, low-profile wireless charger crafted from solid walnut wood. Supports fast charging for compatible smartphones and blends seamlessly with your desk decor.",
+    "price": 45.00,
+    "rating": 4.6,
+    "reviews": 142,
+    "imageUrl": "/images/cat-electronics.jpg",
+    "category": "Electronics & Audio"
+  },
+  {
+    "id": "p18",
+    "brand": "Clarity",
+    "name": "Cashmere Blend Scarf",
+    "description": "Wrap up in unparalleled softness. This versatile scarf blends premium cashmere and fine merino wool, providing lightweight warmth for chilly days.",
+    "price": 85.00,
+    "originalPrice": 110.00,
+    "rating": 4.8,
+    "reviews": 210,
+    "imageUrl": "/images/cat-fashion.jpg",
+    "category": "Fashion & Apparel"
+  },
+  {
+    "id": "p19",
+    "brand": "Oasis",
+    "name": "Hand-Poured Soy Wax Candle",
+    "description": "Fill your home with the complex, grounding scent of sandalwood and fig. Hand-poured in small batches using clean-burning soy wax and a crackling wooden wick.",
+    "price": 38.00,
+    "rating": 4.9,
+    "reviews": 476,
+    "imageUrl": "/images/cat-home.jpg",
+    "category": "Home & Living"
+  },
+  {
+    "id": "p20",
+    "brand": "Lumina",
+    "name": "Jade Roller and Gua Sha Set",
+    "description": "Elevate your skincare ritual. Crafted from authentic Xiuyan jade, this cooling duo helps reduce puffiness, promote lymphatic drainage, and enhance product absorption.",
+    "price": 28.00,
+    "rating": 4.7,
+    "reviews": 634,
+    "imageUrl": "/images/cat-beauty.jpg",
+    "category": "Beauty & Wellness"
   }
 ]

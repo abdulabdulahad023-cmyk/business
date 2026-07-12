@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "MarketSphere"
+version = "1.0.0"
+id = "artifacts/marketsphere"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19264
+
+[services.development]
+run = "pnpm --filter @workspace/marketsphere run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/marketsphere", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/marketsphere/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19264"
+BASE_PATH = "/"

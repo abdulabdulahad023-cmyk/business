@@ -1,0 +1,89 @@
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import NotFound from '@/pages/not-found';
+import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Navbar } from '@/components/layout/navbar';
+import { Footer } from '@/components/layout/footer';
+import { Home } from '@/pages/home';
+import { CartItem, WishlistItem, Product } from '@/types';
+
+const queryClient = new QueryClient();
+
+function Router({ 
+  onAddToCart,
+  onToggleWishlist
+}: { 
+  onAddToCart: (p: Product) => void;
+  onToggleWishlist: (p: Product, isAdded: boolean) => void;
+}) {
+  return (
+    <Switch>
+      <Route path="/">
+        <Home 
+          onAddToCart={onAddToCart} 
+          onToggleWishlist={onToggleWishlist} 
+        />
+      </Route>
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
+function App() {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+
+  const handleAddToCart = (product: Product) => {
+    setCartItems(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item => 
+          item.id === product.id 
+            ? { ...item, quantity: item.quantity + 1 } 
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
+
+  const handleToggleWishlist = (product: Product, isAdded: boolean) => {
+    if (isAdded) {
+      setWishlistItems(prev => {
+        if (!prev.find(item => item.id === product.id)) {
+          return [...prev, product];
+        }
+        return prev;
+      });
+    } else {
+      setWishlistItems(prev => prev.filter(item => item.id !== product.id));
+    }
+  };
+
+  return (
+    <ThemeProvider defaultTheme="light" storageKey="marketsphere-theme">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+            <div className="flex flex-col min-h-[100dvh]">
+              <Navbar cartItems={cartItems} wishlistItems={wishlistItems} />
+              <main className="flex-1 flex flex-col pt-24">
+                <Router 
+                  onAddToCart={handleAddToCart}
+                  onToggleWishlist={handleToggleWishlist}
+                />
+              </main>
+              <Footer />
+            </div>
+          </WouterRouter>
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  );
+}
+
+export default App;

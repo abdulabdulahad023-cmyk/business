@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, ShoppingBag, Star, StarHalf, Eye, Zap, CreditCard } from 'lucide-react';
+import { Heart, ShoppingBag, Star, StarHalf, Eye, Zap, CreditCard, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -13,6 +13,7 @@ import {
   DialogClose
 } from '@/components/ui/dialog';
 import { Product } from '@/types';
+import { Link, useLocation } from 'wouter';
 
 interface ProductCardProps extends Product {
   onAddToCart: () => void;
@@ -38,6 +39,7 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export function ProductCard({
+  id,
   name,
   brand,
   price,
@@ -52,6 +54,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [, setLocation] = useLocation();
   
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -117,38 +120,42 @@ export function ProductCard({
         </button>
 
         {/* Image Container */}
-        <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-          <img 
-            src={imageUrl} 
-            alt={name} 
-            className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-          />
-          
-          {/* Quick Actions Overlay */}
-          <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-          
-          <div className={`absolute inset-x-0 bottom-0 p-4 flex flex-col gap-2 translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isHovered ? 'translate-y-0' : ''}`}>
-            <DialogTrigger asChild>
-              <Button 
-                variant="secondary"
-                className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm border border-border shadow-sm font-semibold h-11 transition-all"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                Quick View
-              </Button>
-            </DialogTrigger>
+        <Link href={`/product/${id}`}>
+          <div className="relative aspect-[4/5] overflow-hidden bg-muted cursor-pointer">
+            <img 
+              src={imageUrl} 
+              alt={name} 
+              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            
+            {/* Quick Actions Overlay */}
+            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            
+            <div className={`absolute inset-x-0 bottom-0 p-4 flex flex-col gap-2 translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isHovered ? 'translate-y-0' : ''}`}>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="secondary"
+                  className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm border border-border shadow-sm font-semibold h-11 transition-all"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                >
+                  <Eye className="w-4 h-4 mr-2" />
+                  Quick View
+                </Button>
+              </DialogTrigger>
+            </div>
           </div>
-        </div>
+        </Link>
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-1 bg-card relative z-20">
           <div className="mb-1.5 text-[11px] font-semibold text-muted-foreground tracking-widest uppercase">
             {brand}
           </div>
-          <h3 className="font-display font-semibold text-foreground line-clamp-2 mb-2.5 leading-tight group-hover:text-primary transition-colors duration-200">
-            {name}
-          </h3>
+          <Link href={`/product/${id}`}>
+            <h3 className="font-display font-semibold text-foreground line-clamp-2 mb-2.5 leading-tight group-hover:text-primary transition-colors duration-200 cursor-pointer">
+              {name}
+            </h3>
+          </Link>
           
           <div className="flex items-center gap-2 mb-auto pb-4">
             <StarRating rating={rating} />
@@ -269,17 +276,30 @@ export function ProductCard({
                 <ShoppingBag className="w-5 h-5 mr-2" />
                 Add to Cart
               </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="w-full font-semibold h-14 text-base rounded-full border-border hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all"
-                onClick={() => {
-                  handleBuyNow();
-                }}
-              >
-                <CreditCard className="w-5 h-5 mr-2" />
-                Buy It Now
-              </Button>
+              <div className="flex gap-4">
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  className="flex-1 font-semibold h-14 text-base rounded-full border-border hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all"
+                  onClick={() => {
+                    handleBuyNow();
+                  }}
+                >
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Buy It Now
+                </Button>
+                <DialogClose asChild>
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="flex-1 font-semibold h-14 text-base rounded-full border border-transparent bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-all"
+                    onClick={() => setLocation(`/product/${id}`)}
+                  >
+                    Full Details
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </DialogClose>
+              </div>
             </div>
           </div>
         </div>

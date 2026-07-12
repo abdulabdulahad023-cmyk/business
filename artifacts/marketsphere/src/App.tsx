@@ -11,6 +11,7 @@ import { Home } from '@/pages/home';
 import { CartItem, WishlistItem, Product } from '@/types';
 
 import { Products } from '@/pages/products';
+import { ProductDetail } from '@/pages/product-detail';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,15 @@ function Router({
           onAddToCart={onAddToCart} 
           onToggleWishlist={onToggleWishlist} 
         />
+      </Route>
+      <Route path="/product/:id">
+        {(params) => (
+          <ProductDetail 
+            id={params.id}
+            onAddToCart={onAddToCart} 
+            onToggleWishlist={onToggleWishlist} 
+          />
+        )}
       </Route>
       <Route component={NotFound} />
     </Switch>

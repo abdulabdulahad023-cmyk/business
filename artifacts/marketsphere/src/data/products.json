@@ -9,7 +9,54 @@
     "rating": 4.8,
     "reviews": 124,
     "imageUrl": "/images/prod-keyboard.jpg",
-    "category": "Electronics & Audio"
+    "category": "Electronics & Audio",
+    "images": [
+      "/images/prod-keyboard.jpg",
+      "/images/cat-electronics.jpg"
+    ],
+    "colors": [
+      { "name": "Matte Black", "hex": "#222222", "imageIndex": 0 },
+      { "name": "Arctic White", "hex": "#F4F4F5", "imageIndex": 1 }
+    ],
+    "sizes": [
+      { "name": "Standard (84-key)", "inStock": true },
+      { "name": "Full-size (104-key)", "inStock": false }
+    ],
+    "specifications": [
+      { "label": "Switch Type", "value": "Hot-swappable Mechanical (Linear/Tactile)" },
+      { "label": "Connectivity", "value": "USB-C, Bluetooth 5.0, 2.4GHz Wireless" },
+      { "label": "Battery Life", "value": "Up to 200 hours (RGB off)" },
+      { "label": "Material", "value": "CNC Machined Aluminum" },
+      { "label": "Weight", "value": "1.2 kg (2.6 lbs)" }
+    ],
+    "seller": {
+      "name": "Kepler Design Studio",
+      "rating": 4.9,
+      "sales": 15420,
+      "joinedDate": "2021"
+    },
+    "reviewList": [
+      {
+        "id": "r1",
+        "author": "Alex M.",
+        "rating": 5,
+        "date": "2 weeks ago",
+        "title": "Best keyboard I've ever owned",
+        "body": "The build quality is incredible. The aluminum chassis is heavy and feels premium. I love the matte keycaps, they don't get shiny after hours of typing.",
+        "verified": true,
+        "helpfulCount": 42
+      },
+      {
+        "id": "r2",
+        "author": "Jordan K.",
+        "rating": 4,
+        "date": "1 month ago",
+        "title": "Great feel, software could be better",
+        "body": "Hardware is a 10/10. Typing is a dream and the sound profile is very 'thocky' right out of the box. Deducting one star because the customization software isn't very intuitive.",
+        "verified": true,
+        "helpfulCount": 15
+      }
+    ]
   },
   {
     "id": "p2",
@@ -20,7 +67,44 @@
     "rating": 4.9,
     "reviews": 89,
     "imageUrl": "/images/prod-watch.jpg",
-    "category": "Fashion & Apparel"
+    "category": "Fashion & Apparel",
+    "images": [
+      "/images/prod-watch.jpg",
+      "/images/cat-fashion.jpg"
+    ],
+    "colors": [
+      { "name": "Tan Leather", "hex": "#8B5A2B", "imageIndex": 0 },
+      { "name": "Midnight Black", "hex": "#111111", "imageIndex": 1 }
+    ],
+    "sizes": [
+      { "name": "40mm Face", "inStock": true },
+      { "name": "36mm Face", "inStock": true }
+    ],
+    "specifications": [
+      { "label": "Movement", "value": "Japanese Quartz" },
+      { "label": "Glass", "value": "Sapphire Crystal (Scratch-resistant)" },
+      { "label": "Water Resistance", "value": "5 ATM (50 meters)" },
+      { "label": "Strap Material", "value": "Top-grain Italian Leather" },
+      { "label": "Case Material", "value": "316L Stainless Steel" }
+    ],
+    "seller": {
+      "name": "Achron Timepieces",
+      "rating": 4.8,
+      "sales": 8930,
+      "joinedDate": "2019"
+    },
+    "reviewList": [
+      {
+        "id": "r3",
+        "author": "Samantha W.",
+        "rating": 5,
+        "date": "3 months ago",
+        "title": "Elegant and timeless",
+        "body": "Looks exactly like the photos. The leather is very high quality and broke in beautifully after just a few days of wearing. Constantly get compliments on it.",
+        "verified": true,
+        "helpfulCount": 24
+      }
+    ]
   },
   {
     "id": "p3",

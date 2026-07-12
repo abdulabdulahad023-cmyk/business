@@ -4,8 +4,13 @@ import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/product-card';
 import { CategoryCard } from '@/components/category-card';
 import { useToast } from '@/hooks/use-toast';
-import { CATEGORIES, FEATURED_PRODUCTS, DAILY_DEALS } from '@/lib/mock-data';
+import { CATEGORIES } from '@/lib/mock-data';
+import productsData from '@/data/products.json';
 import { Product } from '@/types';
+
+// Split the products into featured and deals
+const FEATURED_PRODUCTS = productsData.filter(p => !p.isDeal).slice(0, 4) as Product[];
+const DAILY_DEALS = productsData.filter(p => p.isDeal).slice(0, 4) as Product[];
 
 import heroImg from '@assets/generated_images/hero.jpg';
 

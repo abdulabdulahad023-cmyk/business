@@ -8,6 +8,8 @@ export interface Product {
   reviews: number;
   imageUrl: string;
   isDeal?: boolean;
+  description?: string;
+  category?: string;
 }
 
 export interface CartItem extends Product {

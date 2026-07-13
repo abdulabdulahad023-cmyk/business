@@ -3,8 +3,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import { ThemeProvider } from '@/components/theme-provider';
+import { AuthProvider } from '@/lib/auth-context';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Home } from '@/pages/home';
@@ -12,6 +13,11 @@ import { CartItem, WishlistItem, Product } from '@/types';
 
 import { Products } from '@/pages/products';
 import { ProductDetail } from '@/pages/product-detail';
+import { Login } from '@/pages/login';
+import { Register } from '@/pages/register';
+import { ForgotPassword } from '@/pages/forgot-password';
+import { ResetPassword } from '@/pages/reset-password';
+import { Account } from '@/pages/account';
 
 const queryClient = new QueryClient();
 
@@ -45,8 +51,36 @@ function Router({
           />
         )}
       </Route>
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/reset-password" component={ResetPassword} />
+      <Route path="/account" component={Account} />
       <Route component={NotFound} />
     </Switch>
+  );
+}
+
+function AppLayout({ 
+  children, 
+  cartItems, 
+  wishlistItems 
+}: { 
+  children: React.ReactNode; 
+  cartItems: CartItem[]; 
+  wishlistItems: WishlistItem[]; 
+}) {
+  const [location] = useLocation();
+  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].includes(location);
+
+  return (
+    <div className="flex flex-col min-h-[100dvh]">
+      {!isAuthPage && <Navbar cartItems={cartItems} wishlistItems={wishlistItems} />}
+      <main className={`flex-1 flex flex-col ${!isAuthPage ? 'pt-24' : ''}`}>
+        {children}
+      </main>
+      {!isAuthPage && <Footer />}
+    </div>
   );
 }
 
@@ -83,23 +117,21 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="marketsphere-theme">
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-            <div className="flex flex-col min-h-[100dvh]">
-              <Navbar cartItems={cartItems} wishlistItems={wishlistItems} />
-              <main className="flex-1 flex flex-col pt-24">
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+              <AppLayout cartItems={cartItems} wishlistItems={wishlistItems}>
                 <Router 
                   onAddToCart={handleAddToCart}
                   onToggleWishlist={handleToggleWishlist}
                 />
-              </main>
-              <Footer />
-            </div>
-          </WouterRouter>
-          <Toaster />
-        </TooltipProvider>
-      </QueryClientProvider>
+              </AppLayout>
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -8,8 +8,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/lib/auth-context';
+import { useLocation } from 'wouter';
 
 export function UserDropdown() {
+  const { isAuthenticated, user, logout } = useAuth();
+  const [, setLocation] = useLocation();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -18,28 +23,59 @@ export function UserDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56 mt-2 rounded-xl p-2">
-        <DropdownMenuLabel className="font-display">My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuItem className="cursor-pointer py-2">
-          <LogIn className="w-4 h-4 mr-2" />
-          <span>Sign In / Create Account</span>
-        </DropdownMenuItem>
-        
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuItem className="cursor-pointer py-2">
-          <ShoppingBag className="w-4 h-4 mr-2" />
-          <span>Orders & Returns</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer py-2">
-          <Settings className="w-4 h-4 mr-2" />
-          <span>Settings</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer py-2">
-          <HelpCircle className="w-4 h-4 mr-2" />
-          <span>Help & Support</span>
-        </DropdownMenuItem>
+        {isAuthenticated ? (
+          <>
+            <DropdownMenuLabel className="font-display">
+              <div className="flex flex-col space-y-1">
+                <span className="text-sm font-medium leading-none">{user?.name}</span>
+                <span className="text-xs leading-none text-muted-foreground">{user?.email}</span>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer py-2" onClick={() => setLocation('/account')}>
+              <User className="w-4 h-4 mr-2" />
+              <span>My Account</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer py-2">
+              <ShoppingBag className="w-4 h-4 mr-2" />
+              <span>Orders & Returns</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer py-2">
+              <Settings className="w-4 h-4 mr-2" />
+              <span>Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer py-2">
+              <HelpCircle className="w-4 h-4 mr-2" />
+              <span>Help & Support</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer py-2 text-destructive focus:bg-destructive/10 focus:text-destructive" onClick={() => {
+              logout();
+              setLocation('/');
+            }}>
+              <LogOut className="w-4 h-4 mr-2" />
+              <span>Log Out</span>
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <>
+            <DropdownMenuLabel className="font-display">My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer py-2" onClick={() => setLocation('/login')}>
+              <LogIn className="w-4 h-4 mr-2" />
+              <span>Sign In</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer py-2" onClick={() => setLocation('/register')}>
+              <User className="w-4 h-4 mr-2" />
+              <span>Create Account</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer py-2">
+              <HelpCircle className="w-4 h-4 mr-2" />
+              <span>Help & Support</span>
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

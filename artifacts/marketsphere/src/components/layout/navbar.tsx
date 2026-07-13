@@ -12,13 +12,11 @@ import { Notifications } from './navbar/notifications';
 import { CartPreview } from './navbar/cart-preview';
 import { WishlistPreview } from './navbar/wishlist-preview';
 import { MobileMenu } from './navbar/mobile-menu';
-import { CartItem, WishlistItem } from '@/types';
+import { WishlistItem } from '@/types';
 
 export function Navbar({ 
-  cartItems, 
   wishlistItems 
 }: { 
-  cartItems: CartItem[]; 
   wishlistItems: WishlistItem[];
 }) {
   const { theme, setTheme } = useTheme();
@@ -84,7 +82,7 @@ export function Navbar({
             <Notifications />
             <UserDropdown />
             <WishlistPreview items={wishlistItems} />
-            <CartPreview items={cartItems} />
+            <CartPreview />
           </div>
         </div>
       </div>

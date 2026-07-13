@@ -18,27 +18,24 @@ import { Register } from '@/pages/register';
 import { ForgotPassword } from '@/pages/forgot-password';
 import { ResetPassword } from '@/pages/reset-password';
 import { Account } from '@/pages/account';
+import { Cart } from '@/pages/cart';
 
 const queryClient = new QueryClient();
 
 function Router({ 
-  onAddToCart,
   onToggleWishlist
 }: { 
-  onAddToCart: (p: Product) => void;
   onToggleWishlist: (p: Product, isAdded: boolean) => void;
 }) {
   return (
     <Switch>
       <Route path="/">
         <Home 
-          onAddToCart={onAddToCart} 
           onToggleWishlist={onToggleWishlist} 
         />
       </Route>
       <Route path="/products">
         <Products 
-          onAddToCart={onAddToCart} 
           onToggleWishlist={onToggleWishlist} 
         />
       </Route>
@@ -46,11 +43,11 @@ function Router({
         {(params) => (
           <ProductDetail 
             id={params.id}
-            onAddToCart={onAddToCart} 
             onToggleWishlist={onToggleWishlist} 
           />
         )}
       </Route>
+      <Route path="/cart" component={Cart} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/forgot-password" component={ForgotPassword} />
@@ -63,11 +60,9 @@ function Router({
 
 function AppLayout({ 
   children, 
-  cartItems, 
   wishlistItems 
 }: { 
   children: React.ReactNode; 
-  cartItems: CartItem[]; 
   wishlistItems: WishlistItem[]; 
 }) {
   const [location] = useLocation();
@@ -75,7 +70,7 @@ function AppLayout({
 
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      {!isAuthPage && <Navbar cartItems={cartItems} wishlistItems={wishlistItems} />}
+      {!isAuthPage && <Navbar wishlistItems={wishlistItems} />}
       <main className={`flex-1 flex flex-col ${!isAuthPage ? 'pt-24' : ''}`}>
         {children}
       </main>
@@ -85,22 +80,7 @@ function AppLayout({
 }
 
 function App() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
-
-  const handleAddToCart = (product: Product) => {
-    setCartItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
-      if (existing) {
-        return prev.map(item => 
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 } 
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
-  };
 
   const handleToggleWishlist = (product: Product, isAdded: boolean) => {
     if (isAdded) {
@@ -121,9 +101,8 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-              <AppLayout cartItems={cartItems} wishlistItems={wishlistItems}>
+              <AppLayout wishlistItems={wishlistItems}>
                 <Router 
-                  onAddToCart={handleAddToCart}
                   onToggleWishlist={handleToggleWishlist}
                 />
               </AppLayout>

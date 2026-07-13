@@ -8,6 +8,8 @@ import { CATEGORIES } from '@/lib/mock-data';
 import productsData from '@/data/products.json';
 import { Product } from '@/types';
 
+import { useCartStore } from '@/lib/cart-store';
+
 // Split the products into featured and deals
 const FEATURED_PRODUCTS = productsData.filter(p => !p.isDeal).slice(0, 4) as Product[];
 const DAILY_DEALS = productsData.filter(p => p.isDeal).slice(0, 4) as Product[];
@@ -15,16 +17,15 @@ const DAILY_DEALS = productsData.filter(p => p.isDeal).slice(0, 4) as Product[];
 import heroImg from '@assets/generated_images/hero.jpg';
 
 export function Home({ 
-  onAddToCart, 
   onToggleWishlist 
 }: { 
-  onAddToCart: (product: Product) => void;
   onToggleWishlist: (product: Product, isAdded: boolean) => void;
 }) {
   const { toast } = useToast();
+  const addItem = useCartStore(state => state.addItem);
 
   const handleAddToCart = (product: Product) => {
-    onAddToCart(product);
+    addItem(product);
     toast({
       title: "Added to Cart",
       description: `${product.name} has been added to your cart.`,

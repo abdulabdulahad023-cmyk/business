@@ -77,7 +77,8 @@ export function ProductCard({
       e.preventDefault();
       e.stopPropagation();
     }
-    // Dummy buy now logic
+    onAddToCart();
+    setLocation('/cart');
   };
 
   const discountPercent = originalPrice && originalPrice > price 

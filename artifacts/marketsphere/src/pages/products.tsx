@@ -37,19 +37,31 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
+import { useCartStore } from '@/lib/cart-store';
+import { useToast } from '@/hooks/use-toast';
+
 type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
 
 const ITEMS_PER_PAGE = 12;
 
 export function Products({ 
-  onAddToCart, 
   onToggleWishlist 
 }: { 
-  onAddToCart: (p: Product) => void;
   onToggleWishlist: (p: Product, isAdded: boolean) => void;
 }) {
   const [, setLocation] = useLocation();
   const searchString = useSearch();
+  const { toast } = useToast();
+  const addItem = useCartStore(state => state.addItem);
+
+  const handleAddToCart = (product: Product) => {
+    addItem(product);
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
+      duration: 3000,
+    });
+  };
   
   // Parse URL search params
   const searchParams = useMemo(() => new URLSearchParams(searchString), [searchString]);
@@ -456,7 +468,7 @@ export function Products({
                   >
                     <ProductCard 
                       {...product} 
-                      onAddToCart={() => onAddToCart(product)}
+                      onAddToCart={() => handleAddToCart(product)}
                       onToggleWishlist={(isAdded) => onToggleWishlist(product, isAdded)}
                     />
                   </motion.div>

@@ -19,6 +19,8 @@ import { Separator } from '@/components/ui/separator';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useToast } from '@/hooks/use-toast';
 
+import { useCartStore } from '@/lib/cart-store';
+
 function StarRating({ rating, count }: { rating: number; count?: number }) {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 >= 0.5;
@@ -46,15 +48,14 @@ function StarRating({ rating, count }: { rating: number; count?: number }) {
 
 export function ProductDetail({ 
   id,
-  onAddToCart,
   onToggleWishlist 
 }: { 
   id: string;
-  onAddToCart: (p: Product) => void;
   onToggleWishlist: (p: Product, isAdded: boolean) => void;
 }) {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const addItem = useCartStore(state => state.addItem);
   
   const product = useMemo(() => ALL_PRODUCTS.find(p => p.id === id), [id]);
   
@@ -149,10 +150,7 @@ export function ProductDetail({
   };
 
   const handleAddToCart = () => {
-    // In a real app we'd pass size/color
-    for (let i = 0; i < quantity; i++) {
-      onAddToCart(product);
-    }
+    addItem(product, quantity);
     toast({
       title: "Added to Cart",
       description: `${quantity}x ${product.name} (${selectedColor.name}, ${selectedSize})`,
@@ -169,8 +167,8 @@ export function ProductDetail({
   };
 
   const handleAddBundle = () => {
-    onAddToCart(product);
-    bundleProducts.forEach(p => onAddToCart(p));
+    addItem(product);
+    bundleProducts.forEach(p => addItem(p));
     toast({
       title: "Bundle Added",
       description: "All 3 items have been added to your cart.",
@@ -401,6 +399,10 @@ export function ProductDetail({
               <Button 
                 size="lg" 
                 variant="outline"
+                onClick={() => {
+                  addItem(product, quantity);
+                  setLocation('/cart');
+                }}
                 className="flex-1 h-14 text-base rounded-xl border-border bg-card hover:bg-accent hover:text-accent-foreground hover:border-accent font-bold transition-colors"
               >
                 Buy it Now
@@ -693,7 +695,7 @@ export function ProductDetail({
                     <ProductCard 
                       {...relatedProd}
                       onAddToCart={() => {
-                        onAddToCart(relatedProd);
+                        addItem(relatedProd);
                         toast({ title: "Added to Cart", description: `${relatedProd.name} added.` });
                       }}
                       onToggleWishlist={(isAdded) => {
